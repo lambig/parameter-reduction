@@ -1,6 +1,6 @@
 {
   "name": "parameter-reduction",
-  "version": "0.5.0",
+  "version": "1.0.1",
   "description": "Tired of defining parameter for resolvers? This might be your friend.",
   "main": "index.js",
   "scripts": {
