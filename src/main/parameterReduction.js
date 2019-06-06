@@ -1,10 +1,10 @@
 "use strict";
 const Optional = require("./optional");
-
+let unDef;
 const map = mapping => (value = []) => normalize(value).map(mapping);
 const filter = filtering => (value = []) => normalize(value).filter(filtering),
       sort = sorter => (value = []) => value.slice().sort(sorter),
-      reduce = (reduction, initial) => (value = []) => value.reduce(reduction, initial),
+      reduce = (reduction, initial) => (value = []) => initial !== unDef ? value.reduce(reduction, initial) : value.reduce(reduction),
       forEach = action => (value = []) => normalize(value).forEach(action);
 const join = delimiter => (value = []) => value.join(delimiter);
 /**

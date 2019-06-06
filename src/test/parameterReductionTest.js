@@ -99,12 +99,24 @@ describe("parameterReduction", () => {
     describe("reduce", () => {
       it("reducing", () =>
         Promise.resolve(input)
+          .then(reduce((r, e) => r + e))
+          .then(actual => expect(actual).to.equal(55)));
+      it("reducing with initial", () =>
+        Promise.resolve(input)
           .then(reduce((r, e) => r + e, ""))
           .then(actual => expect(actual).to.equal("12345678910")));
-      it("no values", () =>
+      it("no values with initial", () =>
         Promise.resolve([])
           .then(reduce((r, e) => r + e, ""))
           .then(actual => expect(actual).to.equal("")));
+      it("no values nor initial", () =>
+        Promise.resolve([])
+          .then(reduce((r, e) => r + e))
+          .then(throwError("Unexpected invocation"))
+          .catch(({ name, message }) => {
+            expect(name).to.equal("TypeError");
+            expect(message).to.equal("Reduce of empty array with no initial value");
+          }));
     });
     describe("join", () => {
       it("joining", () =>
