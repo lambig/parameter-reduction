@@ -5,7 +5,20 @@
     max-nested-callbacks,
     max-statements
 */
-const { wrap, unwrap, map, filter, sort, reduce, forEach, flatten, join, sift, siftBy } = require("../main/parameterReduction"),
+const {
+        wrap,
+        unwrap,
+        map,
+        filter,
+        sort,
+        reduce,
+        reduceRight,
+        forEach,
+        flatten,
+        join,
+        sift,
+        siftBy
+      } = require("../main/parameterReduction"),
       chai = require("chai"),
       expect = chai.expect;
 
@@ -112,6 +125,28 @@ describe("parameterReduction", () => {
       it("no values nor initial", () =>
         Promise.resolve([])
           .then(reduce((r, e) => r + e))
+          .then(throwError("Unexpected invocation"))
+          .catch(({ name, message }) => {
+            expect(name).to.equal("TypeError");
+            expect(message).to.equal("Reduce of empty array with no initial value");
+          }));
+    });
+    describe("reduceRight", () => {
+      it("reducing", () =>
+        Promise.resolve(input)
+          .then(reduceRight((r, e) => r + e))
+          .then(actual => expect(actual).to.equal(55)));
+      it("reducing with initial", () =>
+        Promise.resolve(input)
+          .then(reduceRight((r, e) => r + e, ""))
+          .then(actual => expect(actual).to.equal("10987654321")));
+      it("no values with initial", () =>
+        Promise.resolve([])
+          .then(reduceRight((r, e) => r + e, ""))
+          .then(actual => expect(actual).to.equal("")));
+      it("no values nor initial", () =>
+        Promise.resolve([])
+          .then(reduceRight((r, e) => r + e))
           .then(throwError("Unexpected invocation"))
           .catch(({ name, message }) => {
             expect(name).to.equal("TypeError");

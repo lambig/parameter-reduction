@@ -5,6 +5,8 @@ const map = mapping => (value = []) => normalize(value).map(mapping);
 const filter = filtering => (value = []) => normalize(value).filter(filtering),
       sort = sorter => (value = []) => value.slice().sort(sorter),
       reduce = (reduction, initial) => (value = []) => initial !== unDef ? value.reduce(reduction, initial) : value.reduce(reduction),
+      reduceRight = (reduction, initial) => (value = []) =>
+        initial !== unDef ? value.reduceRight(reduction, initial) : value.reduceRight(reduction),
       forEach = action => (value = []) => normalize(value).forEach(action);
 const join = delimiter => (value = []) => value.join(delimiter);
 /**
@@ -82,4 +84,4 @@ const normalize = value => {
         return e;
       };
 
-module.exports = { wrap, unwrap, map, filter, sort, reduce, forEach, flatten, join, sift, siftBy };
+module.exports = { wrap, unwrap, map, filter, sort, reduce, reduceRight, forEach, flatten, join, sift, siftBy };
