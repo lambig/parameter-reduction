@@ -20,8 +20,18 @@ Tired of defining parameter for resolvers? This might be your friend.
     * forEach
 
 ### Optional
-  wraps single values and enables you to handle it like arrays.
-  
+  wraps single values and enables you to handle them like arrays.
+```javascript
+const { wrap, map, filter, unwrap } = require("parameter-reduction"),
+  add = increment => num => num + increment,
+  byBeingOdd = num => num % 2;
+
+Promise.resolve(5) //now, concerns are separated.
+  .then(wrap)
+  .then(filter(byBeingOdd))
+  .then(map(add(1)))
+  .then(unwrap);
+```
 ### Utility methods
 #### flatten
 flattens array of arrays to array (reduce 1 dimension)
@@ -75,7 +85,7 @@ Promise
  */
 ```
 
-## USAGE
+## EXAMPLE
 
 ### You can make this
 
@@ -102,29 +112,4 @@ Promise.resolve([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
   .then(map(add(1)))
   .then(filter(byBeingOdd))
   .then(reduce(sum));
-```
-
-### Handling single value?
-
-```javascript
-const add = increment => num => num + increment,
-  byBeingOdd = num => num % 2;
-
-Promise.resolve(5) //uh-oh. this is going to be a trouble someday.
-  .then(elem => (byBeingOdd(elem) ? elem : null)) //what if null / undefined?
-  .then(elem => add(1));
-```
-
-### No problem, you can do it like this.
-
-```javascript
-const { wrap, map, filter, unwrap } = require("parameter-reduction"),
-  add = increment => num => num + increment,
-  byBeingOdd = num => num % 2;
-
-Promise.resolve(5) //now, concerns are separated.
-  .then(wrap)
-  .then(filter(byBeingOdd))
-  .then(map(add(1)))
-  .then(unwrap);
 ```
