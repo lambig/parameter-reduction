@@ -3,6 +3,77 @@
 # parameter-reduction
 
 Tired of defining parameter for resolvers? This might be your friend.
+## FEATURING
+
+### Calling array methods
+  * array methods
+    * map
+    * filter
+    * sort
+    * reduce
+    * reduceRight
+    * forEach
+    * join
+  * optional methods
+    * map
+    * filter
+    * forEach
+
+### Optional
+  wraps single values and enables you to handle it like arrays.
+  
+### Utility methods
+#### flatten
+flattens array of arrays to array (reduce 1 dimension)
+```javascript
+const { flatten } = require("parameter-reduction");
+flatten([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) //returns [1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+#### sift
+sift elements with multiple criterias, and reserve the rests.
+```javascript
+const { sift } = require("parameter-reduction");
+sift([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  .by(
+    n => n > 5,
+    n => n < 0,
+    n => !(n % 2),
+    n => n === 5
+    );
+/*
+ * returns
+ * [
+ *   [6, 7, 8, 9, 10], //
+ *   [],
+ *   [2, 4],
+ *   [5],
+ *   [1, 3]
+ * ]
+ */
+```
+#### siftBy
+callback-friendly implement of sift, you can give criterias first.
+```javascript
+const { siftBy } = require("parameter-reduction");
+Promise
+  .resolve([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  .then(siftBy(
+    n => n > 5,
+    n => n < 0,
+    n => !(n % 2),
+    n => n === 5
+  ));             
+/*
+ * resolves
+ * [
+ *   [6, 7, 8, 9, 10],
+ *   [],
+ *   [2, 4],
+ *   [5],
+ *   [1, 3]
+ * ]
+ */
+```
 
 ## USAGE
 
