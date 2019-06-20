@@ -14,6 +14,11 @@ const {
         reduce,
         reduceRight,
         forEach,
+        concat,
+        head,
+        tail,
+        init,
+        last,
         flatten,
         join,
         sift,
@@ -152,6 +157,70 @@ describe("parameterReduction", () => {
             expect(name).to.equal("TypeError");
             expect(message).to.equal("Reduce of empty array with no initial value");
           }));
+    });
+
+    describe("concat", () => {
+      it("concatenation", () =>
+        Promise.resolve(input)
+          .then(concat(11))
+          .then(concat([12, 13]))
+          .then(actual => expect(actual).to.deep.equal([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])));
+    });
+    describe("head", () => {
+      it("getting head", () =>
+        Promise.resolve(input)
+          .then(head)
+          .then(actual => expect(actual).to.equal(1)));
+      it("single element", () =>
+        Promise.resolve([1])
+          .then(head)
+          .then(actual => expect(actual).to.equal(1)));
+      it("empty", () =>
+        Promise.resolve([])
+          .then(head)
+          .then(actual => expect(actual).to.undefined));
+    });
+    describe("tail", () => {
+      it("getting tail", () =>
+        Promise.resolve(input)
+          .then(tail)
+          .then(actual => expect(actual).to.deep.equal([2, 3, 4, 5, 6, 7, 8, 9, 10])));
+      it("single element", () =>
+        Promise.resolve([1])
+          .then(tail)
+          .then(actual => expect(actual).to.deep.equal([])));
+      it("empty", () =>
+        Promise.resolve([])
+          .then(tail)
+          .then(actual => expect(actual).to.deep.equal([])));
+    });
+    describe("last", () => {
+      it("getting last", () =>
+        Promise.resolve(input)
+          .then(last)
+          .then(actual => expect(actual).to.equal(10)));
+      it("single element", () =>
+        Promise.resolve([1])
+          .then(last)
+          .then(actual => expect(actual).to.equal(1)));
+      it("empty", () =>
+        Promise.resolve([])
+          .then(last)
+          .then(actual => expect(actual).to.undefined));
+    });
+    describe("init", () => {
+      it("getting init", () =>
+        Promise.resolve(input)
+          .then(init)
+          .then(actual => expect(actual).to.deep.equal([1, 2, 3, 4, 5, 6, 7, 8, 9])));
+      it("single element", () =>
+        Promise.resolve([1])
+          .then(init)
+          .then(actual => expect(actual).to.deep.equal([])));
+      it("empty", () =>
+        Promise.resolve([])
+          .then(init)
+          .then(actual => expect(actual).to.deep.equal([])));
     });
     describe("join", () => {
       it("joining", () =>

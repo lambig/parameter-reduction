@@ -42,6 +42,9 @@ class Optional {
   reduceRight() {
     throw error("Cannot reduce single value.");
   }
+  concat(elems = []) {
+    return (this.isSet ? [this.value] : []).concat(elems);
+  }
   some(evaluator) {
     return this.every(evaluator);
   }

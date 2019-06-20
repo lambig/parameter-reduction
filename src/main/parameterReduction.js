@@ -7,7 +7,12 @@ const filter = filtering => (value = []) => normalize(value).filter(filtering),
       reduce = (reduction, initial) => (value = []) => initial !== unDef ? value.reduce(reduction, initial) : value.reduce(reduction),
       reduceRight = (reduction, initial) => (value = []) =>
         initial !== unDef ? value.reduceRight(reduction, initial) : value.reduceRight(reduction),
-      forEach = action => (value = []) => normalize(value).forEach(action);
+      forEach = action => (value = []) => normalize(value).forEach(action),
+      concat = (elems = []) => (value = []) => normalize(value).concat(elems),
+      head = ([head, ...tail] = []) => head,
+      tail = ([head, ...tail] = []) => tail,
+      init = (value = []) => value.slice(0, value.length - 1),
+      last = (value = []) => value[value.length - 1];
 const join = delimiter => (value = []) => value.join(delimiter);
 /**
  * flatten array (minus one dimension)
@@ -42,8 +47,8 @@ const unwrap = value => value instanceof Optional ? value.value : value;
  * @returns array of element arrays. array has with length of filters + 1(for left elements)
  */
 const sift = (array = []) => {
-  const separate = (ar, filter) =>
-    ar.reduce(
+  const separateBy = filter =>
+    reduce(
       ([matched, unmatched], elem) => [filter(elem) ? matched.concat(elem) : matched, !filter(elem) ? unmatched.concat(elem) : unmatched],
       [[], []]
     );
@@ -55,7 +60,7 @@ const sift = (array = []) => {
     by: (...filters) => {
       const [matchedResult, left] = filters.reduce(
         ([result, l], filter) => {
-          const [matched, unmatched] = separate(l, filter);
+          const [matched, unmatched] = separateBy(filter)(l);
           return [result.concat([matched]), unmatched];
         },
         [[], array]
@@ -84,4 +89,22 @@ const normalize = value => {
         return e;
       };
 
-module.exports = { wrap, unwrap, map, filter, sort, reduce, reduceRight, forEach, flatten, join, sift, siftBy };
+module.exports = {
+  wrap,
+  unwrap,
+  map,
+  filter,
+  sort,
+  reduce,
+  reduceRight,
+  forEach,
+  concat,
+  head,
+  tail,
+  init,
+  last,
+  flatten,
+  join,
+  sift,
+  siftBy
+};
