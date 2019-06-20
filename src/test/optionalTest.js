@@ -108,6 +108,53 @@ describe("optional", () => {
       unSet.forEach(() => assert.fail("unexpected execution"));
     });
   });
+  describe("concat", () => {
+    it("value and arg", () => {
+      const optional = new Optional(1),
+            actual = optional.concat(2);
+      expect(actual).to.deep.equal([1, 2]);
+    });
+    it("value and arg array", () => {
+      const optional = new Optional(1),
+            actual = optional.concat([2, 3]);
+      expect(actual).to.deep.equal([1, 2, 3]);
+    });
+    it("empty value and arg", () => {
+      const optional = new Optional(),
+            actual = optional.concat(2);
+      expect(actual).to.deep.equal([2]);
+    });
+    it("empty value and arg array", () => {
+      const optional = new Optional(),
+            actual = optional.concat([2, 3]);
+      expect(actual).to.deep.equal([2, 3]);
+    });
+    it("value and empty arg", () => {
+      const optional = new Optional(1),
+            actual = optional.concat();
+      expect(actual).to.deep.equal([1]);
+    });
+    it("empty value and arg", () => {
+      const optional = new Optional(),
+            actual = optional.concat();
+      expect(actual).to.deep.equal([]);
+    });
+    it("empty value and arg array", () => {
+      const optional = new Optional(),
+            actual = optional.concat([2, 3]);
+      expect(actual).to.deep.equal([2, 3]);
+    });
+    it("array value and arg", () => {
+      const optional = new Optional([1]),
+            actual = optional.concat(2);
+      expect(actual).to.deep.equal([[1], 2]);
+    });
+    it("array value and arg array", () => {
+      const optional = new Optional([1]),
+            actual = optional.concat([2]);
+      expect(actual).to.deep.equal([[1], 2]);
+    });
+  });
   describe("keys", () => {
     it("throws exception", () => {
       const optional = new Optional(1);
