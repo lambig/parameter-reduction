@@ -1,11 +1,12 @@
 {
   "name": "parameter-reduction",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Tired of defining parameter for resolvers? This might be your friend.",
   "main": "index.js",
   "scripts": {
     "test": "mocha src/test",
-    "test:coverage": "nyc npm run test --reporter=lcov --reporter=text-summary ava"
+    "test:coverage": "nyc npm run test --reporter=lcov --reporter=text-summary ava",
+    "test:package": "node scripts/verify-package.cjs"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,13 @@
     "chai": "4.2.0",
     "mocha": "7.1.1",
     "nyc": "15.0.0"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "files": [
+    "index.js",
+    "src/main/"
+  ]
 }

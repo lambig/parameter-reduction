@@ -35,3 +35,5 @@ jobs:
         run: npm ci --registry=https://npm.flatt.tech/ --no-audit --no-fund
       - name: Run tests
         run: npm test
+      - name: Verify npm package consumers
+        run: npm run test:package
