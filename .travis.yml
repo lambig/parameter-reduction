@@ -1,6 +1,9 @@
 language: node_js
-node_js:
-  - "11"
-  - "10"
-  - "9"
-  - "8"
+dist: noble
+# Travis reads the exact supported runtime from .nvmrc.
+install:
+  - npm ci --no-audit --no-fund
+script:
+  - node --version
+  - npm --version
+  - npm test
