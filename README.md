@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/lambig/parameter-reduction.svg?branch=master)](https://travis-ci.org/lambig/parameter-reduction)
+[![Node CI](https://github.com/lambig/parameter-reduction/actions/workflows/node-ci.yml/badge.svg?branch=master)](https://github.com/lambig/parameter-reduction/actions/workflows/node-ci.yml)
 
 # parameter-reduction
 
