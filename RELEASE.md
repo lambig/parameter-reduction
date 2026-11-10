@@ -13,9 +13,18 @@ path, integrity and file list.
    release and update `.nvmrc` before the final release validation. A package
    does not embed the Node executable; republishing alone does not patch a
    consumer's Node runtime.
-3. Check `npm view <package-name> version dist-tags --json` through the existing
-   npm security proxy. Choose an unused version and update package.json and
-   package-lock.json together. The current version is a release candidate.
+3. Check the exact candidate against the official registry immediately before
+   publication (replace 1.3.4 with the final candidate):
+   `npm view parameter-reduction@1.3.4 version --registry=https://registry.npmjs.org/`.
+   Also retrieve the full history with
+   `npm view parameter-reduction versions --json --registry=https://registry.npmjs.org/`.
+   Stop if the candidate exists under any tag or in that history. Proceed only
+   when the package history lookup succeeds and excludes the candidate, and
+   the exact lookup reports no matching version. Authentication, network and
+   other lookup failures are not evidence that a version is unused. A version
+   previously published and then unpublished must not be reused either.
+   Update package.json and package-lock.json together. The current version is
+   a release candidate; latest/dist-tags alone cannot establish availability.
 4. Run `npm ci --registry=https://npm.flatt.tech/ --no-audit --no-fund`, the
    repository tests, and `npm run test:package`. Inspect the reported tarball
    file list and integrity. Confirm the same commit's Node CI succeeds.
